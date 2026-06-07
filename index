@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savya Compare - US Product & Price Comparison Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .gradient-text {
+        background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .hero-gradient {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fdf4ff 100%);
+    }
+    
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+    
+    .retailer-logo {
+        filter: grayscale(100%);
+        opacity: 0.7;
+        transition: all 0.3s ease;
+    }
+    
+    .retailer-logo:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    
+    .category-icon {
+        transition: all 0.3s ease;
+    }
+    
+    .category-card:hover .category-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .price-badge {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    
+    .search-shadow {
+        box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3);
+    }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-lg bg-white/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-chart-line text-white text-lg md:text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-extrabold tracking-tight">
+                            <span class="gradient-text">SAVYA</span>
+                            <span class="text-gray-900">COMPARE</span>
+                        </h1>
+                        <p class="text-[10px] md:text-xs text-gray-500 font-medium -mt-1">US Product & Price Comparison Hub</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="#categories" class="text-gray-600 hover:text-indigo-600 font-medium transition">Categories</a>
+                    <a href="#trending" class="text-gray-600 hover:text-indigo-600 font-medium transition">Trending</a>
+                    <a href="#retailers" class="text-gray-600 hover:text-indigo-600 font-medium transition">Retailers</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-indigo-600 font-medium transition">How It Works</a>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition">
+                    <i class="fas fa-bars text-xl text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100 bg-white">
+            <div class="px-4 py-3 space-y-2">
+                <a href="#categories" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">Categories</a>
+                <a href="#trending" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">Trending</a>
+                <a href="#retailers" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">Retailers</a>
+                <a href="#how-it-works" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">How It Works</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Search -->
+    <section class="hero-gradient py-12 md:py-20 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto animate-fade-in">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">
+                    Compare Prices Across <span class="gradient-text">7 Major US Retailers</span> Instantly
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 mb-8 font-medium">
+                    Find the lowest price on appliances, electronics, tools & more. We track Home Depot, Lowe's, Walmart, Amazon, Best Buy, Costco, and Sam's Club.
+                </p>
+                
+                <!-- Search Bar -->
+                <form id="search-form" class="relative max-w-2xl mx-auto">
+                    <div class="relative search-shadow rounded-2xl">
+                        <input 
+                            type="text" 
+                            id="search-input"
+                            placeholder="Search by product name, model number, or SKU..." 
+                            class="w-full px-6 py-4 md:py-5 pr-14 text-base md:text-lg rounded-2xl border-2 border-gray-200 focus:border-indigo-500 focus:outline-none transition"
+                        >
+                        <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl transition shadow-lg">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-3">Example: "Whirlpool WRF535SWHZ" or "Samsung 65 inch TV"</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Index Overview -->
+    <section id="retailers" class="py-12 md:py-16 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide mb-2">Trusted Retailer Network</p>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900">We Compare Prices Across These 7 US Retailers</h3>
+            </div>
+            <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 md:gap-8 items-center justify-items-center">
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-orange-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">HD</div>
+                    <span class="text-xs font-semibold text-gray-700">Home Depot</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-700 rounded-xl flex items-center justify-center text-white font-bold text-xl">L</div>
+                    <span class="text-xs font-semibold text-gray-700">Lowe's</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-sm">WM</div>
+                    <span class="text-xs font-semibold text-gray-700">Walmart</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-sm">AMZ</div>
+                    <span class="text-xs font-semibold text-gray-700">Amazon</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-yellow-500 rounded-xl flex items-center justify-center text-blue-900 font-bold text-sm">BB</div>
+                    <span class="text-xs font-semibold text-gray-700">Best Buy</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-xl flex items-center justify-center text-white font-bold text-sm">CO</div>
+                    <span class="text-xs font-semibold text-gray-700">Costco</span>
+                </div>
+                <div class="retailer-logo flex flex-col items-center space-y-2">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-sm">SC</div>
+                    <span class="text-xs font-semibold text-gray-700">Sam's Club</span>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <p class="text-gray-600 text-sm md:text-base">All prices updated daily. We don't sell products - we find you the best deals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Grid Layout -->
+    <section id="categories" class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Browse by Category</h3>
+                <p class="text-lg text-gray-600">Compare prices on millions of products across top categories</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Category 1 -->
+                <a href="categories.html?view=appliances" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-sky-100 to-indigo-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-blender text-2xl md:text-3xl text-indigo-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Appliances</h4>
+                    <p class="text-sm text-gray-600 mb-3">Refrigerators, Washers, Dryers</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 2 -->
+                <a href="categories.html?view=electronics" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-tv text-2xl md:text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Electronics</h4>
+                    <p class="text-sm text-gray-600 mb-3">TVs, Laptops, Audio, Gaming</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 3 -->
+                <a href="categories.html?view=tools" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-tools text-2xl md:text-3xl text-orange-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Tools & Hardware</h4>
+                    <p class="text-sm text-gray-600 mb-3">Power Tools, Hand Tools</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 4 -->
+                <a href="categories.html?view=outdoor" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-2xl md:text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Lawn & Garden</h4>
+                    <p class="text-sm text-gray-600 mb-3">Mowers, Grills, Patio</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 5 -->
+                <a href="categories.html?view=smart-home" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-home text-2xl md:text-3xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Smart Home</h4>
+                    <p class="text-sm text-gray-600 mb-3">Security, Automation</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 6 -->
+                <a href="categories.html?view=mattresses" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-bed text-2xl md:text-3xl text-indigo-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Mattresses</h4>
+                    <p class="text-sm text-gray-600 mb-3">Memory Foam, Hybrid</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 7 -->
+                <a href="categories.html?view=kitchen" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-utensils text-2xl md:text-3xl text-yellow-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Kitchen</h4>
+                    <p class="text-sm text-gray-600 mb-3">Cookware, Small Appliances</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+                
+                <!-- Category 8 -->
+                <a href="categories.html?view=fitness" class="category-card bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl card-hover border border-gray-100">
+                    <div class="category-icon w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-100 to-pink-100 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-dumbbell text-2xl md:text-3xl text-red-600"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2">Fitness</h4>
+                    <p class="text-sm text-gray-600 mb-3">Treadmills, Weights</p>
+                    <span class="text-sm font-semibold text-indigo-600">Compare Prices <i class="fas fa-arrow-right ml-1"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending US Comparisons Feed -->
+    <section id="trending" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-10">
+                <div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Trending US Comparisons</h3>
+                    <p class="text-lg text-gray-600">Most compared products this week</p>
+                </div>
+                <a href="categories.html?view=trending" class="hidden md:flex items-center text-indigo-600 font-semibold hover:text-indigo-700 transition">
+                    View All <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product Tile 1 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $1,299</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-orange-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">HD</div>
+                                <div class="w-7 h-7 bg-blue-700 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">L</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+4</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">LG 27.8 cu ft French Door Refrigerator</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: LRFXS2503S</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Home Depot</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$1,299 - $1,449</span>
+                            </div>
+                        <a href="product.html?model=LRFXS2503S" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Tile 2 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $449</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-yellow-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">BB</div>
+                                <div class="w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">AMZ</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+5</div>
+                            </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">Samsung 65" Class QLED 4K Smart TV</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: QN65Q60DDFXZA</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Best Buy</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$449 - $527</span>
+                            </div>
+                        <a href="product.html?model=QN65Q60DDFXZA" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Tile 3 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $199</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-blue-700 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">L</div>
+                                <div class="w-7 h-7 bg-orange-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">HD</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+3</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">DeWalt 20V MAX Cordless Drill Combo Kit</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: DCK240C2</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Lowe's</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$199 - $229</span>
+                            </div>
+                        <a href="product.html?model=DCK240C2" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Tile 4 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $749</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">CO</div>
+                                <div class="w-7 h-7 bg-blue-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">SC</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+4</div>
+                            </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">Whirlpool 4.7 cu ft Electric Dryer</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: WED5000DW</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Costco</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$749 - $849</span>
+                            </div>
+                        </div>
+                        <a href="product.html?model=WED5000DW" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Tile 5 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $899</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-blue-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">WM</div>
+                                <div class="w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">AMZ</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+3</div>
+                            </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">Apple MacBook Air 13" M2 Chip</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: MLXX3LL/A</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Walmart</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$899 - $999</span>
+                            </div>
+                        </div>
+                        <a href="product.html?model=MLXX3LL/A" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Tile 6 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="price-badge text-white text-xs font-bold px-3 py-1 rounded-full">LOWEST: $279</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 bg-orange-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white font-bold">HD</div>
+                                <div class="w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">AMZ</div>
+                                <div class="w-7 h-7 bg-gray-400 rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">+2</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">Ring Video Doorbell Pro 2</h4>
+                        <p class="text-sm text-gray-500 mb-4">Model: B08N5NQ869</p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span class="text-gray-600">Lowest at:</span>
+                                <span class="font-bold text-gray-900">Home Depot</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Price Range:</span>
+                                <span class="text-gray-900">$279 - $299</span>
+                            </div>
+                        <a href="product.html?model=B08N5NQ869" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-xl transition">
+                            Compare at 7 Stores
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10 md:hidden">
+                <a href="categories.html?view=trending" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-700 transition">
+                    View All Trending <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">How Savya Compare Works</h3>
+                <p class="text-lg text-gray-600">Save money in 3 simple steps</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-sky-100 to-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-search text-3xl text-indigo-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">1. Search Any Product</h4>
+                    <p class="text-gray-600">Enter a product name, model number, or SKU to instantly see prices from 7 major US retailers.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-chart-bar text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">2. Compare Prices</h4>
+                    <p class="text-gray-600">View side-by-side price comparisons, including shipping, tax estimates, and available promotions.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-external-link-alt text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">3. View at Retailer</h4>
+                    <p class="text-gray-600">Click "Check Current Price" to visit the retailer site and complete your purchase with confidence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-20 bg-gradient-to-br from-indigo-600 to-purple-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Start Saving Today</h3>
+            <p class="text-xl text-indigo-100 mb-8">Join thousands of smart shoppers finding the best prices across America</p>
+            <a href="#categories" class="inline-block bg-white text-indigo-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-50 transition shadow-lg text-lg">
+                Compare Prices Now <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-xl font-extrabold text-white">SAVYA</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-4">US Product & Price Comparison Hub</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="font-bold text-white mb-4">Categories</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="categories.html?view=appliances" class="hover:text-white transition">Appliances</a></li>
+                        <li><a href="categories.html?view=electronics" class="hover:text-white transition">Electronics</a></li>
+                        <li><a href="categories.html?view=tools" class="hover:text-white transition">Tools</a></li>
+                        <li><a href="categories.html?view=smart-home" class="hover:text-white transition">Smart Home</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-bold text-white mb-4">Company</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">How It Works</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-bold text-white mb-4">Legal</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">Affiliate Disclosure</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        <strong class="text-white">Disclaimer:</strong> Savya Compare aggregates prices. We don't sell products. Prices/links go to retailer sites. All product names, logos, and brands are property of their respective owners. Prices are updated daily but may vary. Always check current price at retailer before purchasing. Savya Compare may earn commissions from qualifying purchases.
+                    </p>
+                </div>
+                <p class="text-center text-sm text-gray-500">
+                    © 2024 Savya Compare. All rights reserved. Made for smart shoppers in the USA.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Search form redirect
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `search.html?query=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>
